@@ -26,11 +26,11 @@ cd MetaBinG2kit
 make
 ```
 
-*编译 CPU 版本 / Compile for the CPU version:*
+编译 CPU 版本 / Compile for the CPU version:
 ```bash
 gcc -o MetaBinG2_CPU MetaBinG2_CPU.c cblas_LINUX.a blas_LINUX.a -lm -lpthread -lgfortran -std=c99
 ```
-
+**虽然按道理编译方式是这样没错，但显然`cblas_LINUX.a` `blas_LINUX.a`不会存在于所有linux系统中，我正尝试解决该问题，在这之前只好用GPU版本了**
 ---
 
 ## 分类 / Classify
@@ -71,38 +71,3 @@ perl stats.all.pl sampleList all.stats p
 
 ---
 
-## 示例 / Example
-
-示例目录中有 3 个样本：SRR3438907.fa、SRR3438908.fa、SRR3438946.fa
-We have 3 samples in example directory: SRR3438907.fa, SRR3438908.fa, SRR3438946.fa
-
-### 1. 分类并获取各样本的群落组成结构 / Classify and get community composition structure of each sample
-
-```bash
-./runMetaBinG2 -i ./example/SRR3438907.fa -o ./example/SRR3438907.out -d db
-./runMetaBinG2 -i ./example/SRR3438908.fa -o ./example/SRR3438908.out -d db
-./runMetaBinG2 -i ./example/SRR3438946.fa -o ./example/SRR3438946.out -d db
-```
-
-### 2. 选择要比较的样本 / Select samples to compare
-
-创建 sample.list / Create sample.list:
-```
-./example/SRR3438907.out.stats
-./example/SRR3438908.out.stats
-./example/SRR3438946.out.stats
-```
-
-### 3. 整合与可视化 / Integration and visualization
-
-```bash
-perl stats.all.pl ./example/sample.list ./example/all.stats
-```
-或 / or
-```bash
-perl stats.all.pl ./example/sample.list ./example/all.stats p
-```
-
-- (i) all.stats 可用于 MetaBinG2 网站 / all.stats can be used in the MetaBinG2 website
-- (ii) 选择参数 'p' 时，将获得可视化结果，可通过 index.html 查看。请确保 ref 目录（在 MetaBinG2kit 中）与 stats.all.pl 位于同一目录 / When you select the parameter 'p', you will get the visualization result and it can be checked through index.html. Please be sure that the ref dir (in MetaBinG2kit) and the stats.all.pl are in the same directory
-```
