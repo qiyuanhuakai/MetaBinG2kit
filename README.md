@@ -15,6 +15,8 @@ Please go to http://cgm.sjtu.edu.cn/MetaBinG2Web/ to download the complete scrip
 - 一块 GPU 显卡 / One GPU card
 - CUDA 编译器 / CUDA Compiler
 - 库：cudart 和 cublas / Libraries: cudart and cublas
+- 库（cpu版本）：cblas 和 blas，或 openblas / Libraries(for cpu version): cblas and blas, or openblas
+- 库（cpu版本）：gfortran / Libraries(for cpu version): gfortran
 - Perl（统计和可视化部分需要）/ perl (required by statistics part and visualization part)
 
 ---
@@ -27,11 +29,15 @@ cd MetaBinG2kit
 make
 ```
 
-- 编译 CPU 版本 / Compile for the CPU version:
+- 编译 CPU 版本，openblas 包含 cblas 和 blas / Compile for the CPU version, openblas includes cblas and blas:
 ```bash
 gcc -o MetaBinG2_CPU MetaBinG2_CPU.c cblas_LINUX.a blas_LINUX.a -lm -lpthread -lgfortran -std=c99
+
+gcc -o MetaBinG2_CPU MetaBinG2_CPU.c -lcblas -lblas -lm -lpthread -lgfortran -std=c99
+
+gcc -o MetaBinG2_CPU MetaBinG2_CPU.c -lopenblas -lm -lpthread -lgfortran -std=c99
 ```
-**虽然按道理编译方式是这样没错，但显然`cblas_LINUX.a` `blas_LINUX.a`不会存在于所有linux系统中，我正尝试解决该问题，在这之前只好用GPU版本了**
+
 ---
 
 ## 分类 / Classify
